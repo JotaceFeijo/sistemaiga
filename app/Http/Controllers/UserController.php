@@ -3,15 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
+    // Este método se ejecuta antes de cualquier método en esta clase
+    //permite que que el usuario sí o si inicie sesión para interactuar con los métodos
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //Este método servirá para poder mostrar la lista de registros al usuario
+        /*SELECT * FROM USERS U INNER JOIN MODEL_HAS_ROLES M ON U.ID=M.MODEL_ID INNER JOIN ROLES R ON
+            M.ROLE_ID=R.ID*/
+
+            $user = User::all();
+        return view('user.user', compact('user'));
+       //return "hola";
     }
 
     /**
@@ -57,8 +70,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         //Para poder eliminar
+        return $request->id;
+
     }
 }
